@@ -1,4 +1,5 @@
 resources:
+##### ddc resource  #####
   - name: ddc-cluster
     type: cluster
     integration: ship-ddc1
@@ -6,6 +7,7 @@ resources:
       sourceName : "nothing" #we can anything because it is mandatory but ddc doesnot have clusters
     flags:
       - ddc-cluster
+##### dcl resource  #####
 
   - name: cluster-dcl
     type: cluster
@@ -15,13 +17,7 @@ resources:
     flags:
       - cluster-dcl
       
-  - name: cluster-dclinavlid
-    type: cluster
-    integration: ship-dcl
-    pointer:
-      sourceName: "cluster-dcl"
-    flags:
-      - cluster-dcl
+##### ecs resource ####
 
   - name: ecs-cluster
     type: cluster
@@ -32,6 +28,7 @@ resources:
     flags:
       - ecs-cluster
       
+#####  gke resource ####     
   - name: gke-cluster
     type: cluster
     integration: ship-gke
@@ -41,6 +38,7 @@ resources:
     flags:
       - gke-cluster
       
+#### tripub resource ####      
   - name: tripub-cluster4
     type: cluster
     integration: ship-tri
@@ -49,7 +47,8 @@ resources:
       region: "us-east-2"
     flags:
       - tripub-cluster3
-      
+     
+#### image resource ####      
   - name: plv2-image12
     type: image
     integration: ship4-docker
@@ -57,7 +56,8 @@ resources:
       sourceName: "shippabledocker/pipelinev2"
     seed:
       versionName: "deploy.1"
-      
+
+#### image resource public ####      
   - name: plv21
     type: image
     integration: ship4-docker
@@ -65,7 +65,7 @@ resources:
       sourceName: "library/nginx"
     seed:
       versionName: "latest"
-      
+#### email resource ####      
   - name: myEmail
     type: notification
     #integration: email
@@ -73,7 +73,7 @@ resources:
       method: email
       recipients: 
         -  "sreya@shippable.com"
-        
+#### slack resource #####        
   - name: mySlack
     type: notification
     integration: ship-slack1
@@ -108,38 +108,44 @@ resources:
     #  publishAllPorts : true
       #publishAllPorts assigns a public ip to the container and gives endpoint
       #for accessing the exposed ports.
-  
+      
+#### params resource1 ######  
   - name: plv2-params1
     type: params
     version:
       params:
         MONGO_API_URL: "localhost:28017"
-      
+        
+##### replica #####      
   - name: plv2-scale2
     type: replicas
     version:
       count: 2
     flags:
       - plv2-scale2
-  
+
+##### version ####  
   - name: plv2-version
     type: version
     seed:
       versionName: "1.1.1-beta"
       
+#### kickstart ####      
   # - name: glab-kickstart
   #   type: kickStart
   #   version: 
   #     counter: 1
-  
+
+#### dockeroptions valid ###  
   - name: flecs-dopts5
     type: dockerOptions
     version:
-      links1YY:
+      links:
         - "fl-img5workingdir"
-      volumesFrom45:
+      volumesFrom:
         - "fl-img5workingdir:ro"
         
+#### env params resource ###        
   - name: foo-resource
     type: params
     version:
@@ -153,38 +159,37 @@ resources:
       sourceName: "scriptnull/busybox"
     seed:
       versionName: "nodeenv"
+### gitRepo ####
   - name: sample-scriptTS1
     type: gitRepo
     integration: github
     pointer:
       sourceName: shiphitchcock24/sample-script-3
       branch: master
-      
+#### invalid dockeroption resource ####      
   - name: fl-dopts6invalid
     type: dockerOptions
     version:
       links:
         - "plv2-manifest8redis_0_0_055d5014-109c-4c84-9bbe-3009a523:testenv"
-  - name: envp1
-    type: params
-    version:
-      params:
-        foo: bar1
-        
+ 
+#### invalid docker option reso ####     
   - name: dep-dopts1
     type: dockerOptions
     version:
       memory: 100
       cpuShares: 2
       
+#### load balancer resource #####    
   - name: lb-loadb1
     type: loadBalancer
     pointer:
       sourceName: EC2Contai-EcsElast-17A64D22JHQLM
-#foo: bar2
- # - name: infra-repo
-  #  type: gitRepo
-  #  integration: github
-   # pointer:
-  #    sourceName: shiphitchcock24/sampleRub
-   #   branch: master
+      
+##### gitRepo ####3
+  - name: infra-repo
+    type: gitRepo
+    integration: github
+    pointer:
+      sourceName: shiphitchcock24/sampleRub
+      branch: master
